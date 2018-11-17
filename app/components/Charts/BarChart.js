@@ -1,12 +1,23 @@
-import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import React from 'react'
+import {View, Text, StyleSheet, TouchableOpacity, Linking} from 'react-native'
+import {BarChart, Grid, YAxis} from 'react-native-svg-charts'
 
-export default class Bar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const data = [1,2,3,4,5,13,2,3,4,5,1,1,2,2,23,1,7]
+const contentInset = { top: 20, bottom: 20 }
 
-  render() {
-    return <Text> Hello </Text>;
-  }
+export default class Bar extends React.Component{
+    
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return (
+        <View style={ { height: 200} }>
+          <BarChart style = {{ flex: 1, marginLeft: 16 }} data = {data} contentInset = {{top:30,bottom:30}} > 
+          <Grid/>
+          </BarChart>
+        </View>
+        
+        )
+    }
 }
