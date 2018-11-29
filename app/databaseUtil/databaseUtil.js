@@ -24,6 +24,9 @@ export function createTables() {
       tx.executeSql(
         'CREATE TABLE IF NOT EXISTS `id_tbl` (`id_name` TEXT NOT NULL PRIMARY KEY UNIQUE, `id_value` INTEGER NOT NULL);'
       );
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS `notification_tbl` (`notification_id` INTEGER NOT NULL PRIMARY KEY UNIQUE, `notification_title` TEXT NOT NULL,`notification_body` TEXT NOT NULL,`medicine_name` TEXT,`notification_time` TEXT NOT NULL);'
+      );
       /* tx.executeSql(
            'CREATE TABLE IF NOT EXISTS view_to_component_tbl ( view_id INTEGER NOT NULL PRIMARY KEY UNIQUE, view_name TEXT NOT NULL UNIQUE, component` TEXT NOT NULL)'
           ); */
@@ -596,7 +599,6 @@ export function getIds(rows,callback){
             //console.log('inside getIds event_id:', event_details_id);
         }
     }
-    console.log('before wrapper call')
     callback(event_id, event_details_id)
 }
 
@@ -808,4 +810,43 @@ export function pullSettingsFromDatabase(callback) {
     },
     err => console.log(err)
   );
+}
+
+export function asyncRegisterNotification(id,body,title,date,medicine_name){
+    /*TODO process date properly */
+    inputArray = [id,body,title,date.toISOString(), medicine_name]
+    Database.transaction(
+        tx => {
+            tx.executeSql(
+                'INSERT OR REPLACE INTO notification_tbl (notification_id, notification_body, notification_title, notification_time, medicine_name) VALUES (?,?,?,?,?)',
+                inputArray
+            );
+        },err => console.log(err)
+    );
+    
+    Database.transaction(
+    tx => {
+      tx.executeSql('SELECT * from notification_tbl_tbl', [], (_, { rows }) => console.log(rows._array)
+      );
+    },
+    err => console.log(err)
+  );
+}
+
+/*input arr should be of the format outputted by setMassNotification
+ARRAY of objects, with Notification ids and dates that correspond to the notification
+  id will be passed in as parameters.
+  Objects will be of the form:
+  Object {
+  id: string
+  date: dateObject
+  title: t,
+  body: b,
+}
+*/
+export function massRegisterNotifications(arr){
+    /*arr.forEach(function(ele) {
+        asyncRegisterNotification(ele.id, ele.body,ele.title, ele.date, 'placeholder')
+    }); */
+    console.log(arr);
 }

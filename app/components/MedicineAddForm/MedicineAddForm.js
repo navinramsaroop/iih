@@ -20,6 +20,7 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   'window'
 );
 import { asyncCreateMedicineEvents } from '../../databaseUtil/databaseUtil';
+import { setNotification, setMassNotification, massRegisterNotifications} from '../PushController/PushController.js';
 import { Calendar } from 'react-native-calendars';
 import { COLOR, IMAGES} from '../Resources/constants';
 
@@ -75,6 +76,14 @@ export default class MedicineAddForm extends React.Component {
         new Date(this.state.submit_vals['End Date']),
         this.state.submit_vals['Time'],
         this.state.submit_vals['Time Category']
+      );
+      setMassNotification(
+        new Date(this.state.submit_vals['Start Date']),
+        new Date(this.state.submit_vals['End Date']),
+        'Medification Reminder',
+        'Take your ' + this.state.submit_vals['Pill Name'],
+        this.state.submit_vals['Time'],
+        massRegisterNotifications
       );
       this.props.screenProps.successOnSubmit()
       this.props.navigation.goBack()

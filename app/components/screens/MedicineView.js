@@ -162,7 +162,8 @@ class CoolerMedicineView extends React.Component {
                     <DoseCard
                     title={item.title}
                     time={item.time}
-                    takenTime={item.takenTime}
+                    //takenTime={item.takenTime}
+                    takenTime={[]}
                     dosage={item.dosage}
                     passed={item.statuses}
                     updateData = {this.updateData}

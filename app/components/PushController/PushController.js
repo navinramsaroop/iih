@@ -115,6 +115,7 @@ export function setMassNotification(
     startDate.getMonth(),
     startDate.getDate()
   );
+  console.log('inside setMassNotification')
   while (Moment(tempDate).isBefore(endDate)) {
     for (var x = 0; x < scheduledTime.length; x++) {
       let hours = parseInt(scheduledTime[x].slice(0, 2));
@@ -147,6 +148,7 @@ export function setMassNotification(
     setNotification(t, b, tempDateWithTime, (i, d) => {
       let temp = { id: i, date: d, title: t, body: b };
       id_bundle.push(temp);
+      console.log('id bundle', id_bundle);
       callBack(id_bundle);
     });
   }
