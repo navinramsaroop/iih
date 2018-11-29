@@ -12,11 +12,9 @@ export default class Bar extends React.Component{
     }
     render(){
         return (
-        <View style={ { height: 200} }>
-          <BarChart style = {{ flex: 1, marginLeft: 16 }} data = {data} contentInset = {{top:30,bottom:30}} > 
-          <Grid/>
-          </BarChart>
-        </View>
+            <TouchableOpacity>
+                <Text> Hello </Text>
+            </TouchableOpacity>
         
         )
     }
