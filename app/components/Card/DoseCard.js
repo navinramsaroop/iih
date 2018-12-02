@@ -69,12 +69,22 @@ class Card extends PureComponent {
       newhours: "hello",
       init_passed : passed_index,
       modalVisible: false,
-      data: this.render_timeline()
+      data: this.render_timeline(),
+      // taken: false,
+      // hhmm_time: "",
+      // newPassed: this.props.passed,
       };
   }
 
   componentDidMount = () => {
       this._handleRenderText()
+  }
+
+  componentWillUnmount = () => {
+    console.log("leaving this page")
+    // if (this.state.taken == true){
+    //   databaseTakeMedicine(new Date(), this.props.title, this.props.dosage, hhmm_time, newPassed)
+    // }
   }
   // determines new hours text
   _handleRenderText = () => {
@@ -316,8 +326,10 @@ class Card extends PureComponent {
         circol = "#cccccc"
         taken_string = "Not taken"
       }
+      console.log("this is the time that we took")
+      console.log(this.props.takenTime[i])
       if (this.props.takenTime[i] != ""){
-        taken_string = this.createTakenString(new Date(this.props.takenTime[i]))
+        taken_string = this.createTakenString(new Date("November 22, 1998 " + this.props.takenTime[i]))
       }
       return {time: hour_string, description: hour_string, title: taken_string, circleColor: circol, index: i};
       })
